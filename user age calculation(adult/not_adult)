@@ -1,0 +1,29 @@
+using System;
+
+namespace user age calculation(adult/not_adult)
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Enter your name: ");
+            string name = Console.ReadLine(); // username
+            
+            
+            Console.Write("Enter your year of birth: ");
+            int birth = Convert.ToInt32(Console.ReadLine()); // year of birth
+
+            DateTime data_today = DateTime.Today; //this year
+            DateTime age = data_today.AddYears(-birth).AddDays(365); // age counting from 0001 , years
+            double age_to_sec = age.Subtract(DateTime.MinValue).TotalSeconds; // age converted to seconds
+            int age_round = (int)(age_to_sec / 31536000); // user age rounded to the integer  // 31536000 - number of seconds in a year
+
+
+            Console.WriteLine($"{name} your age is {age_round}");
+
+            int age18 = 18; // age of adult, years
+            if (age_round> age18) 
+                Console.Write("You are adult"); // if user age is greater than or equals to 18
+            else
+           
+                Console.WriteLine("You are not adult"); // if user's age is less than 18
