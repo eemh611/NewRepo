@@ -1,0 +1,30 @@
+using System;
+
+namespace UserAgeCalculation
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Enter your name: ");
+            string userName = Console.ReadLine();
+
+
+            Console.Write("Enter your year of birth: ");
+            int yearOfBirth = Convert.ToInt32(Console.ReadLine());
+
+            int currentYear = DateTime.Now.Year;
+            int userAge = currentYear - yearOfBirth; 
+
+            Console.WriteLine($"{userName} your age is {userAge}");
+
+            int ageOfAdult = 18; 
+            if (userAge >= ageOfAdult)
+                Console.Write("You are adult"); // if user age is greater than or equals to 18
+            else
+
+                Console.WriteLine("You are not adult"); // if user's age is less than 18
+            Console.ReadKey();            
+        }
+    }
+}
