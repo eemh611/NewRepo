@@ -5,7 +5,7 @@ namespace UserAgeCalculation
     class Program
     {
         static void Main(string[] args)
-       {
+        {
             Console.Write("Enter your name: ");
             string userName = Console.ReadLine();
 
@@ -27,12 +27,11 @@ namespace UserAgeCalculation
 
                 if ((currentYear - 100) <= yearOfBirth && yearOfBirth < currentYear)
                     break;
-                {
+                
                     Console.WriteLine($"Error, your year of birth cannot be less than {currentYear - 100} or greater than { currentYear }, please enter valid value");
                     Console.Write("Enter your year of birth: ");
                     yearOfBirthString = Console.ReadLine();
                     continue;
-                }
             }
                 
             int userAge = currentYear - yearOfBirth;
