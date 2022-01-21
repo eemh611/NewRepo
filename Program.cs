@@ -9,17 +9,66 @@ namespace UserAgeCalculation
             Console.Write("Enter your name: ");
             string userName = Console.ReadLine();
 
-            int currentYear = DateTime.Now.Year;
-            int yearOfBirth = 0;
-
             Console.Write("Enter your year of birth: ");
-            string yearOfBirthString = Console.ReadLine();
+            var yearOfBirth = GetYearOfBirth();
+
+            int currentYear = DateTime.Now.Year;
+            int userAge = currentYear - yearOfBirth;
+            Console.WriteLine($"\n{userName} your age is {userAge}");
+
+            int ageOfAdult = 18;
+
+            if (userAge >= ageOfAdult)
+                Console.WriteLine("You are adult");
+
+            else
+                Console.WriteLine("You are not adult");
+
+
+            Console.WriteLine("\nHow many places would you like to visit in 10 years ?");
+            var numberPlaces = GetNumberPlaces();
+
+            var places = new string[numberPlaces];
+
+            Console.WriteLine("\nPlace current_number for example 1, 2, ..., 10");
+
+            for (int i = 0; i < places.Length; i++)
+            {
+                Console.Write($"\nPlaces №{i + 1}: ");
+                places[i] = Console.ReadLine();
+            }
+
+            Console.WriteLine("\nPlaces you'd like to visit in 10 years: ");
+            int currentPlaceNumber = 0;
+            foreach (var place in places)
+            {
+                ++currentPlaceNumber;
+                Console.WriteLine($"{currentPlaceNumber}) {place}");
+            }
+            Console.ReadKey();
+        }
+
+        private static void OutputErrorMessageAndRequestTheValue(string errorMessage, string requestAValue)
+        {
+            Console.WriteLine(errorMessage);
+            Console.WriteLine(requestAValue);
+        }
+
+        private static int GetYearOfBirth()
+        {
+            var yearOfBirthString = Console.ReadLine();
+            var currentYear = DateTime.Now.Year;
+            var yearOfBirth = 0;
+
+            const string errorMessage1 = "Invalid input string, year of birth should be a four digit number";
+            string errorMessage2 = $"Error, your year of birth cannot be less than {currentYear - 100} or greater than { currentYear }, please enter valid value";
+            const string requestAValue = "\nEnter your year of birth: ";
 
             while (true)
             {
                 if (!int.TryParse(yearOfBirthString, out yearOfBirth))
                 {
-                    OutputErrorMessageAndRequestTheText("Invalid input string, year of birth should be a four digit number");
+                    OutputErrorMessageAndRequestTheValue(errorMessage1, requestAValue);
                     yearOfBirthString = Console.ReadLine();
                     continue;
                 }
@@ -27,66 +76,43 @@ namespace UserAgeCalculation
                 if ((currentYear - 100) <= yearOfBirth && yearOfBirth < currentYear)
                     break;
 
-                OutputErrorMessageAndRequestTheText($"Error, your year of birth cannot be less than {currentYear - 100} or greater than { currentYear }, please enter valid value");
+                OutputErrorMessageAndRequestTheValue(errorMessage2, requestAValue);
                 yearOfBirthString = Console.ReadLine();
                 continue;
             }
+            return yearOfBirth;
+        }
 
-            int userAge = currentYear - yearOfBirth;
-            Console.WriteLine($"\n{userName} your age is {userAge}");
+        private static void OutputErrorMessageAndRequestTheNumber(string errorMessage, string requestAValue)
+        {
+            Console.WriteLine(errorMessage);
+            Console.WriteLine(requestAValue);
+        }
 
-            int ageOfAdult = 18;
+        private static int GetNumberPlaces()
+        {
+            const string errorMessage = "Invalid input string, enter a positive integer numeric value between 0 and 10.";
+            const string requestAValue = "How many places would you like to visit in 10 years ?";
 
-            if (userAge >= ageOfAdult)
-                Console.WriteLine("You are adult"); // if user age is greater than or equals to 18
-
-            else
-                Console.WriteLine("You are not adult"); // if user's age is less than 18
-
-
-            Console.WriteLine("\nHow many places would you like to visit in 10 years ?");
             var numberPlacesString = Console.ReadLine();
             var numberPlaces = 0;
-
             while (true)
             {
                 if (!int.TryParse(numberPlacesString, out numberPlaces))
                 {
-                    Console.WriteLine("Invalid input string, enter a positive integer numeric value between 0 and 10.");
+                    OutputErrorMessageAndRequestTheNumber(errorMessage, requestAValue);
                     numberPlacesString = Console.ReadLine();
                     continue;
                 }
 
-                if ( 0 <= numberPlaces && numberPlaces < 11)
+                if (0 <= numberPlaces && numberPlaces < 11)
                     break;
 
-                Console.WriteLine("Invalid input string, enter a positive integer numeric value between 0 and 10.");
+                OutputErrorMessageAndRequestTheNumber(errorMessage, requestAValue);
                 numberPlacesString = Console.ReadLine();
                 continue;
             }
-
-            string[] places = new string[numberPlaces+1];
-            var i = 1;
-
-            for (Console.WriteLine("\nPlace current_number for example 1, 2, ..., 10"); i <= numberPlaces; ++i)
-            {
-                Console.Write($"\nPlaces №{i}: ");
-                places[i] = Console.ReadLine();   
-            }
-
-            Console.WriteLine("\nPlaces you'd like to visit in 10 years: ");
-
-            for (int n = 1; n < places.Length; n++)
-            {
-                Console.WriteLine($"{n}) {places[n]}");
-            }
-            Console.ReadKey();
-        }
-       
-        private static void OutputErrorMessageAndRequestTheText(string errorMessage)
-        {
-            Console.WriteLine(errorMessage);
-            Console.Write("Enter your year of birth: ");
+            return numberPlaces;
         }
     }
 }
