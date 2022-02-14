@@ -58,10 +58,12 @@ namespace UserAgeCalculation
         {
             var yearOfBirthString = Console.ReadLine();
             var currentYear = DateTime.Now.Year;
+            var lowerAgeRang = DateTime.Now.Year - 100;
             var yearOfBirth = 0;
-
             const string errorMessage1 = "Invalid input string, year of birth should be a four digit number";
-            string errorMessage2 = $"Error, your year of birth cannot be less than {currentYear - 100} or greater than { currentYear }, please enter valid value";
+            const string errorMessage2Text = "Error, your year of birth cannot be less than {0}  or greater than {1}, please enter valid value";
+            string errorMessage2 = string.Format(errorMessage2Text, lowerAgeRang, currentYear);
+
             const string requestAValue = "\nEnter your year of birth: ";
 
             while (true)
@@ -73,7 +75,7 @@ namespace UserAgeCalculation
                     continue;
                 }
 
-                if ((currentYear - 100) <= yearOfBirth && yearOfBirth < currentYear)
+                if (lowerAgeRang <= yearOfBirth && yearOfBirth < currentYear)
                     break;
 
                 OutputErrorMessageAndRequestTheValue(errorMessage2, requestAValue);
@@ -81,12 +83,6 @@ namespace UserAgeCalculation
                 continue;
             }
             return yearOfBirth;
-        }
-
-        private static void OutputErrorMessageAndRequestTheNumber(string errorMessage, string requestAValue)
-        {
-            Console.WriteLine(errorMessage);
-            Console.WriteLine(requestAValue);
         }
 
         private static int GetNumberPlaces()
@@ -100,7 +96,7 @@ namespace UserAgeCalculation
             {
                 if (!int.TryParse(numberPlacesString, out numberPlaces))
                 {
-                    OutputErrorMessageAndRequestTheNumber(errorMessage, requestAValue);
+                    OutputErrorMessageAndRequestTheValue(errorMessage, requestAValue);
                     numberPlacesString = Console.ReadLine();
                     continue;
                 }
@@ -108,7 +104,7 @@ namespace UserAgeCalculation
                 if (0 <= numberPlaces && numberPlaces < 11)
                     break;
 
-                OutputErrorMessageAndRequestTheNumber(errorMessage, requestAValue);
+                OutputErrorMessageAndRequestTheValue(errorMessage, requestAValue);
                 numberPlacesString = Console.ReadLine();
                 continue;
             }
